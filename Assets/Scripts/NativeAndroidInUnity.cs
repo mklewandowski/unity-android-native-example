@@ -26,24 +26,17 @@ public class NativeAndroidInUnity : MonoBehaviour
     private void showAndroidToast()
     {
         //create a Toast class object
-        AndroidJavaClass toastClass =
-                    new AndroidJavaClass("android.widget.Toast");
+        AndroidJavaClass toastClass = new AndroidJavaClass("android.widget.Toast");
 
         //create an array and add params to be passed
         object[] toastParams = new object[3];
-        AndroidJavaClass unityActivity =
-          new AndroidJavaClass("com.unity3d.player.UnityPlayer");
-        toastParams[0] =
-                     unityActivity.GetStatic<AndroidJavaObject>
-                               ("currentActivity");
+        AndroidJavaClass unityActivity = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
+        toastParams[0] = unityActivity.GetStatic<AndroidJavaObject>("currentActivity");
         toastParams[1] = toastText;
-        toastParams[2] = toastClass.GetStatic<int>
-                               ("LENGTH_LONG");
+        toastParams[2] = toastClass.GetStatic<int>("LENGTH_LONG");
 
         //call static function of Toast class, makeText
-        AndroidJavaObject toastObject =
-                        toastClass.CallStatic<AndroidJavaObject>
-                                      ("makeText", toastParams);
+        AndroidJavaObject toastObject = toastClass.CallStatic<AndroidJavaObject>("makeText", toastParams);
 
         //show toast
         toastObject.Call("show");
